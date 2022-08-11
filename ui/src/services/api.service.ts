@@ -36,4 +36,13 @@ export class APIService {
             method: 'GET',
         });
     }
+
+    static async signIn(username: string): Promise<boolean> {
+        return APIService.do(`${API_URL}/user/${username}/signin`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    }
 }

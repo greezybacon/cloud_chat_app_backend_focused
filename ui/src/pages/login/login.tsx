@@ -1,6 +1,8 @@
 import './login.scss';
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import { APIService } from '../../services';
 
 export interface LoginProps { }
 
@@ -9,10 +11,11 @@ export const LoginPage: React.FunctionComponent<LoginProps> = () => {
     const [username, setUsername] = useState('');
 
     // need to be able to login
+    let navigate = useNavigate();
     const login = () => {
-        if (loggingIn) {
-            return;
-        }
+        APIService.signIn(username).then(() => {
+            navigate("/chat/lobby");
+        });
     }
 
     return (
@@ -27,7 +30,7 @@ export const LoginPage: React.FunctionComponent<LoginProps> = () => {
                         Username
                         <input type='text' value={username} onChange={(e) => setUsername(e.target.value.toLowerCase())} />
                     </label>
-                    <button type='submit' onClick={() => login()}>
+                    <button type='submit' onClick={login}>
                         Submit
                     </button>
                 </div>
